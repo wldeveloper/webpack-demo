@@ -1,20 +1,18 @@
 const path = require('path');
+const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const config = require('./config.js');
+
 const {
   host,
   cdn,
   env,
   gateway,
-  static,
   buildFolderName,
 } = config;
 
 module.exports = {
-  entry: {
-    common: config.common,
-  },
   output: {
     path: path.resolve(__dirname, buildFolderName),
   },
@@ -23,19 +21,22 @@ module.exports = {
       vj: '@vj',
       classnames: 'classnames/bind',
       svg: 'react-svg-inline',
-      actions$: path.resolve(__dirname, 'src/actions/index.js'),
+      actions$: path.resolve(__dirname, '../src/actions/index.jsx'),
     },
+    extensions: ['.js', '.json', '.jsx'],
   },
   externals: {
     echarts: 'echarts',
   },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin('dist', {
+      root: path.resolve(__dirname, '../'),
+    }),
     new HtmlWebpackPlugin({
-      template: path.resolve(__diname, 'index.html'),
+      template: path.resolve(__dirname, '../index.html'),
       filename: 'index.html',
       inject: true,
-      static,
+      static: config.static,
       host,
       minify: {
         removeComments: true,

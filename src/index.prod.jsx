@@ -8,6 +8,7 @@ import Reducers from './reducers';
 import App from './App';
 
 import 'moment/locale/zh-cn';
+
 moment.locale('zh-cn');
 import 'babel-polyfill';
 
@@ -15,14 +16,12 @@ import 'babel-polyfill';
 const middleware = [thunk];
 const store = createStore(
   Reducers,
-  compose(
-    applyMiddleware(...middleware)
-  )
+  compose(applyMiddleware(...middleware)),
 );
 
 ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('app')
+  document.getElementById('app'),
 );

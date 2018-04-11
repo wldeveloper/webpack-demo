@@ -1,6 +1,4 @@
-import {
-  RECEIVE_TOKEN_SUCCESS,
-} from '../actions/home';
+import { RECEIVE_TOKEN_SUCCESS } from '../actions/home';
 
 const token = (state = { fetching: true }, action) => {
   switch (action.type) {
@@ -11,7 +9,7 @@ const token = (state = { fetching: true }, action) => {
       };
     default:
       return state;
-  };
+  }
 };
 
 export default {

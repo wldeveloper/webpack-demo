@@ -1,37 +1,37 @@
 const path = require('path');
 const merge = require('webpack-merge');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const common = require('./webpack.common.js');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const commonConfig = require('./webpack.common.js');
 const config = require('./config.js');
 const webpack = require('webpack');
 const cssnano = require('cssnano');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
+
 const {
   common,
   app,
-  static,
   assets,
   staticPath,
   modulesPath,
 } = config;
 
-module.exports = merge(common, {
+module.exports = merge(commonConfig, {
   bail: true,
   devtool: 'source-map',
   entry: {
     common,
-    [app]: path.resolve(__dirname, 'src/index.prod.js'),
+    [app]: path.resolve(__dirname, '../src/index.prod.jsx'),
   },
   output: {
-    publicPath: static,
-    filename: `js/[name]-[hash:6].js`,
+    publicPath: config.static,
+    filename: 'js/[name]-[hash:6].js',
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: modulesPath,
       },
@@ -112,11 +112,11 @@ module.exports = merge(common, {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'common',
-      filename: `js/common-[hash:6].js`,
+      filename: 'js/common-[hash:6].js',
       minChunks: Infinity,
     }),
     new ExtractTextPlugin({
-      filename: `css/index-[contenthash:6].css`,
+      filename: 'css/index-[contenthash:6].css',
       ignoreOrder: true,
     }),
     // css优化

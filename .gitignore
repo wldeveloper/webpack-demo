@@ -1,0 +1,38 @@
+# 报错
+logs
+*.log
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# 依赖
+bower_components
+node_modules/
+
+# 杂
+.grunt
+.eslintcache
+.svn
+.history
+.cache/
+sftp-config.json
+
+# 系统相关
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# 压缩包
+*.tgz
+*.tar
+
+# 打包文件
+dist
+
+# 构建信息
+stats.json
+
+# 编辑器
+.idea/
+.vscode

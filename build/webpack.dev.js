@@ -4,9 +4,9 @@ const common = require('./webpack.common.js');
 const config = require('./config.js');
 const webpack = require('webpack');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
+
 const {
   app,
-  buildFolderName,
   modulesPath,
   staticPath,
 } = config;
@@ -17,7 +17,7 @@ module.exports = merge(common, {
       'react-hot-loader/patch',
       'webpack-dev-server/client',
       'webpack/hot/only-dev-server',
-      path.resolve(__dirname, '../src/index.dev.js'),
+      path.resolve(__dirname, '../src/index.dev.jsx'),
     ],
   },
   output: {
@@ -27,13 +27,13 @@ module.exports = merge(common, {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         enforce: 'pre',
         loader: 'eslint-loader',
         exclude: modulesPath,
       },
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         loader: 'babel-loader?cacheDirectory',
         exclude: modulesPath,
       },

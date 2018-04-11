@@ -5,9 +5,10 @@ const webpackDevServer = require('webpack-dev-server');
 const openBrowser = require('react-dev-utils/openBrowser');
 const clearConsole = require('react-dev-utils/clearConsole');
 const devConfig = require('./build/webpack.dev.js');
-const getProcessForPort = require('react-dev-utils/getProcessForPort');
+const getProcessForPort = require('react-dev-utils/getProcessForPort'); // eslint-disable-line
 const { choosePort } = require('react-dev-utils/WebpackDevServerUtils');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+
 const compiler = webpack(devConfig);
 const {
   app,
@@ -16,7 +17,7 @@ const {
   hostname,
   port,
 } = config;
-let HOST = hostname;
+const HOST = hostname;
 let PORT = port;
 // 配置输出
 compiler.plugin('done', stats => {
@@ -26,7 +27,7 @@ compiler.plugin('done', stats => {
   if (isSuccessful) {
     clearConsole();
     console.log(chalk.green(`编译成功，监听在${protocol}//${HOST}:${PORT}${basename}`));
-  };
+  }
   // 错误异常
   if (messages.errors.length) {
     clearConsole();
@@ -35,7 +36,7 @@ compiler.plugin('done', stats => {
       console.log(msg);
     });
     return;
-  };
+  }
   // 警告异常
   if (messages.warnings.length) {
     clearConsole();
@@ -43,8 +44,7 @@ compiler.plugin('done', stats => {
     messages.warnings.forEach(msg => {
       console.log(msg);
     });
-    return;
-  };
+  }
 });
 // 启动devServer
 const runDevServer = (host, port) => {
@@ -56,22 +56,28 @@ const runDevServer = (host, port) => {
     publicPath: `${protocol}//${host}:${port}/`,
     clientLogLevel: 'error',
     https: /s/.test(protocol),
-    stats: { colors: true, chunks: false, errorDetails: true, warnings: true },
+    stats: {
+      colors: true,
+      chunks: false,
+      errorDetails: true,
+      warnings: true,
+    },
     disableHostCheck: true,
     historyApiFallback: {
       rewrites: [{ from: /.*/, to: '/' }],
     },
   });
-  devServer.listen(port, host, () => {
+  console.log(port);
+  devServer.listen(host, port, () => {
     console.log(chalk.cyan('正在启动本地服务…'));
-    openBrowser(`${protocol}//${host}:${port}${basename}`);
+    openBrowser(`${protocol}//${port}:${host}${basename}`);
   });
 };
 // 启动端口检测程序
 choosePort(HOST, PORT).then(port => {
   if (port == null) {
     return;
-  };
+  }
   PORT = port;
   runDevServer(HOST, PORT);
 }).catch(err => {

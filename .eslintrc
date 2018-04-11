@@ -1,0 +1,63 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true,
+      "arrowFunctions": true,
+      "classes": true,
+      "modules": true,
+      "defaultParams": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "rules": {
+    "react/sort-comp": "error",
+    "react/prefer-stateless-function": ["error", {
+      "ignorePureComponents": true
+    }],
+    "react/no-unknown-property": "error",
+    "react/no-unescaped-entities": "error",
+    "react/no-string-refs": "error",
+    "react/no-multi-comp": ["error", {
+      "ignoreStateless": true
+    }],
+    "react/no-is-mounted": "error",
+    "react/no-find-dom-node": "error",
+    "react/no-direct-mutation-state": "error",
+    "react/no-will-update-set-state": "error",
+    "react/no-did-update-set-state": "error",
+    "react/no-deprecated": "error",
+    "react/no-danger-with-children": "error",
+    "react/no-children-prop": "error",
+    "react/jsx-wrap-multilines": "error",
+    "react/jsx-uses-vars": "warn",
+    "react/jsx-uses-react": "warn",
+    "react/jsx-pascal-case": "error",
+    "react/jsx-no-target-blank": "error",
+    "react/jsx-no-duplicate-props": "error",
+    "react/jsx-indent-props": ["error", 2],
+    "react/jsx-handler-names": "error",
+    "react/jsx-first-prop-new-line": ["error", "multiline"],
+    "react/jsx-equals-spacing": "error",
+    "react/jsx-closing-bracket-location": "error",
+    "react/jsx-boolean-value": "error",
+    "jsx-quotes": "error",
+    "import/no-extraneous-dependencies": "off",
+    "import/first": "off",
+    "no-underscore-dangle": "off",
+    "global-require": "off",
+    "no-console": "off",
+    "no-shadow": "off",
+    "new-cap": "off",
+    "arrow-parens": ["error", "as-needed"]
+  }
+}

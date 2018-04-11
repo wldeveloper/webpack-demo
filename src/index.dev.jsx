@@ -10,6 +10,7 @@ import App from './App';
 
 import moment from 'moment';
 import 'moment/locale/zh-cn';
+
 moment.locale('zh-cn');
 import 'babel-polyfill';
 
@@ -19,9 +20,7 @@ const middleware = [thunk, logger];
 const store = createStore(
   Reducers,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  compose(
-    applyMiddleware(...middleware)
-  )
+  compose(applyMiddleware(...middleware)),
 );
 // HMR
 if (module.hot) {
@@ -29,7 +28,7 @@ if (module.hot) {
     const nextRootReducer = require('./reducers').default;
     store.replaceReducer(nextRootReducer);
   });
-};
+}
 
 const render = Component => {
   ReactDOM.render(
@@ -38,7 +37,7 @@ const render = Component => {
         <Component />
       </Provider>
     </AppContainer>,
-    document.getElementById('app')
+    document.getElementById('app'),
   );
 };
 render(App);
@@ -46,4 +45,4 @@ if (module.hot) {
   module.hot.accept('./App', () => {
     render(App);
   });
-};
+}
