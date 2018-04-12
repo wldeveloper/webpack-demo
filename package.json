@@ -17,7 +17,8 @@
   "homepage": "https://github.com/wldeveloper/webpack-demo#readme",
   "scripts": {
     "start": "cross-env BUILD_ENV=development node ./server.js",
-    "build": "cross-env BUILD_ENV=production webpack --config ./build/webpack.prod.js"
+    "build": "cross-env BUILD_ENV=production webpack --config ./build/webpack.prod.js",
+    "analyzer": "webpack-bundle-analyzer ./stats.json"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -26,6 +27,7 @@
     "moment": "^2.22.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
+    "react-loadable": "^5.3.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
     "react-svg-inline": "^2.1.0",
@@ -37,6 +39,7 @@
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
     "babel-loader": "^7.1.4",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-react-constant-elements": "^6.23.0",
     "babel-plugin-transform-react-inline-elements": "^6.22.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
@@ -70,7 +73,9 @@
     "style-loader": "^0.20.3",
     "url-loader": "^1.0.1",
     "webpack": "3.8.1",
+    "webpack-bundle-analyzer": "^2.11.1",
     "webpack-dev-server": "2.9.1",
-    "webpack-merge": "^4.1.2"
+    "webpack-merge": "^4.1.2",
+    "workbox-webpack-plugin": "^3.0.1"
   }
 }

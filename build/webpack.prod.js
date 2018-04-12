@@ -7,6 +7,8 @@ const webpack = require('webpack');
 const cssnano = require('cssnano');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const {
   vendor,
@@ -24,7 +26,7 @@ module.exports = merge(common, {
   },
   output: {
     publicPath: config.static,
-    filename: 'js/[name]-[hash:6].js',
+    filename: 'js/[name]-[chunkhash:6].js',
   },
   module: {
     rules: [
@@ -112,7 +114,12 @@ module.exports = merge(common, {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      filename: 'js/[name]-[hash:6].js',
+      filename: 'js/[name]-[chunkhash:6].js',
+      minChunks: Infinity,
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      filename: 'js/manifest-[chunkhash:6].js',
       minChunks: Infinity,
     }),
     new ExtractTextPlugin({
@@ -140,6 +147,16 @@ module.exports = merge(common, {
         },
         warnings: false,
       },
+    }),
+    new webpack.HashedModuleIdsPlugin(),
+    new WorkboxPlugin.GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true,
+    }),
+    new BundleAnalyzerPlugin({
+      generateStatsFile: true,
+      analyzerMode: 'disabled',
+      statsFilename: '../stats.json',
     }),
   ],
 });
