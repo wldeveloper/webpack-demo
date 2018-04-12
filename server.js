@@ -17,8 +17,8 @@ const {
   hostname,
   port,
 } = config;
-const HOST = hostname;
-let PORT = port;
+const HOSTNAME = hostname; // 主机名
+let PORT = port; // 端口
 // 配置输出
 compiler.plugin('done', stats => {
   const messages = formatWebpackMessages(stats.toJson({}, true));
@@ -26,7 +26,7 @@ compiler.plugin('done', stats => {
   // 成功
   if (isSuccessful) {
     clearConsole();
-    console.log(chalk.green(`编译成功，监听在${protocol}//${HOST}:${PORT}${basename}`));
+    console.log(chalk.green(`编译成功，监听在${protocol}//${HOSTNAME}:${PORT}${basename}`));
   }
   // 错误异常
   if (messages.errors.length) {
@@ -40,7 +40,7 @@ compiler.plugin('done', stats => {
   // 警告异常
   if (messages.warnings.length) {
     clearConsole();
-    console.log(chalk.yellow(`警告！监听在${protocol}//${HOST}:${PORT}${basename}`));
+    console.log(chalk.yellow(`警告！监听在${protocol}//${HOSTNAME}:${PORT}${basename}`));
     messages.warnings.forEach(msg => {
       console.log(msg);
     });
@@ -67,19 +67,16 @@ const runDevServer = (host, port) => {
       rewrites: [{ from: /.*/, to: '/' }],
     },
   });
-  console.log(port);
-  devServer.listen(host, port, () => {
+  devServer.listen(port, host, () => {
     console.log(chalk.cyan('正在启动本地服务…'));
-    openBrowser(`${protocol}//${port}:${host}${basename}`);
+    openBrowser(`${protocol}//${host}:${port}${basename}`);
   });
 };
 // 启动端口检测程序
-choosePort(HOST, PORT).then(port => {
-  if (port == null) {
-    return;
-  }
+choosePort(HOSTNAME, PORT).then(port => {
+  if (port == null) return;
   PORT = port;
-  runDevServer(HOST, PORT);
+  runDevServer(HOSTNAME, PORT);
 }).catch(err => {
   if (err && err.message) {
     console.log(err.message);

@@ -21,7 +21,7 @@ module.exports = merge(common, {
     ],
   },
   output: {
-    filename: `${app}.js`,
+    filename: '[name].js',
   },
   devtool: 'eval',
   module: {
@@ -54,7 +54,6 @@ module.exports = merge(common, {
             loader: 'postcss-loader',
             options: {
               plugins: [
-                require('precss')(),
                 require('autoprefixer')(),
               ],
             },
@@ -82,7 +81,6 @@ module.exports = merge(common, {
             loader: 'postcss-loader',
             options: {
               plugins: [
-                require('precss')(),
                 require('autoprefixer')(),
               ],
             },

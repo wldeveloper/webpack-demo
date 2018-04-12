@@ -1,28 +1,26 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const commonConfig = require('./webpack.common.js');
+const common = require('./webpack.common.js');
 const config = require('./config.js');
 const webpack = require('webpack');
 const cssnano = require('cssnano');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 
 const {
-  common,
+  vendor,
   app,
-  assets,
   staticPath,
   modulesPath,
 } = config;
 
-module.exports = merge(commonConfig, {
+module.exports = merge(common, {
   bail: true,
   devtool: 'source-map',
   entry: {
-    common,
     [app]: path.resolve(__dirname, '../src/index.prod.jsx'),
+    vendor,
   },
   output: {
     publicPath: config.static,
@@ -37,57 +35,59 @@ module.exports = merge(commonConfig, {
       },
       {
         test: /\.s(c|a)ss$/,
-        use: ExtractTextPlugin.extract([
-          {
-            loader: 'css-loader',
-            options: {
-              modules: true,
-              localIdentName: `${app}-[hash:6]`,
-              sourceMap: false,
-              minimize: true,
+        use: ExtractTextPlugin.extract({
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                localIdentName: `${app}-[hash:base64:6]`,
+                sourceMap: false,
+                minimize: true,
+              },
             },
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: [
-                require('precss')(),
-                require('autoprefixer')(),
-              ],
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: [
+                  require('autoprefixer')(),
+                ],
+              },
             },
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              loadPath: path.resolve(__dirname, '../'),
+            {
+              loader: 'sass-loader',
+              options: {
+                loadPath: path.resolve(__dirname, '../'),
+              },
             },
-          },
-        ]),
+          ],
+        }),
         exclude: [modulesPath, staticPath],
       }, {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract([
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-              minimize: {
-                discardComments: {
-                  removeAll: true,
+        use: ExtractTextPlugin.extract({
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                minimize: {
+                  discardComments: {
+                    removeAll: true,
+                  },
                 },
               },
             },
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: [
-                require('precss')(),
-                require('autoprefixer')(),
-              ],
+            {
+              loader: 'postcss-loader',
+              options: {
+                plugins: [
+                  require('autoprefixer')(),
+                ],
+              },
             },
-          },
-        ]),
+          ],
+        }),
         include: [modulesPath, staticPath],
       }, {
         test: /\.(png|jpe?g|gif|woff|woff2|ttf|eot)$/,
@@ -111,12 +111,12 @@ module.exports = merge(commonConfig, {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'common',
-      filename: 'js/common-[hash:6].js',
+      name: 'vendor',
+      filename: 'js/[name]-[hash:6].js',
       minChunks: Infinity,
     }),
     new ExtractTextPlugin({
-      filename: 'css/index-[contenthash:6].css',
+      filename: 'css/[name]-[contenthash:6].css',
       ignoreOrder: true,
     }),
     // css优化
@@ -140,11 +140,6 @@ module.exports = merge(commonConfig, {
         },
         warnings: false,
       },
-    }),
-    new HtmlWebpackIncludeAssetsPlugin({
-      assets,
-      append: false,
-      publicPath: false,
     }),
   ],
 });

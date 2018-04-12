@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 const config = require('./config.js');
 
 const {
@@ -9,12 +10,13 @@ const {
   cdn,
   env,
   gateway,
+  assets,
   buildFolderName,
 } = config;
 
 module.exports = {
   output: {
-    path: path.resolve(__dirname, buildFolderName),
+    path: path.resolve(__dirname, `../${buildFolderName}`),
   },
   resolve: {
     alias: { // 别名
@@ -69,11 +71,15 @@ module.exports = {
       moment: 'moment',
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new HtmlWebpackIncludeAssetsPlugin({
+      assets,
+      append: false,
+      publicPath: false,
+    }),
   ],
   node: {
     console: false,
     __filename: false,
-    // __dirname: false,
     setImmediate: false,
     assert: false,
     buffer: false,

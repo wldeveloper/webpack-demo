@@ -1,38 +1,37 @@
-# 报错
-logs
-*.log
-npm-debug.log
-yarn-debug.log
-yarn-error.log
-
-# 依赖
-bower_components
-node_modules/
-
-# 杂
-.grunt
-.eslintcache
-.svn
-.history
-.cache/
-sftp-config.json
-
-# 系统相关
-.DS_Store
+### windows ###
 Thumbs.db
-ehthumbs.db
 Desktop.ini
+ehthumbs.db
+$RECYCLE.BIN
 
-# 压缩包
-*.tgz
-*.tar
+### MAC OS ###
+*.DS_Store
 
-# 打包文件
+### svn/git ###
+.svn
+.git
+
+### vscode ###
+.vscode
+.history
+
+### WebStorm ###
+.idea
+*.stackdump
+
+### npm/yarn ###
+package-lock.json
+*.log
+
+### folder ###
 dist
 
-# 构建信息
-stats.json
+### files ###
+*.tar
+*.tgz
 
-# 编辑器
-.idea/
-.vscode
+### node ###
+node_modules
+stats.json
+commit.json
+bower_components
