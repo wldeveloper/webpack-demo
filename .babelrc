@@ -1,4 +1,8 @@
 {
+  "plugins": [
+    "syntax-dynamic-import",
+    "react-loadable/babel"
+  ],
   "env": {
     "development": {
       "presets": [
@@ -7,9 +11,7 @@
         "stage-0"
       ],
       "plugins": [
-        "react-hot-loader/babel",
-        "syntax-dynamic-import",
-        "react-loadable/babel"
+        "react-hot-loader/babel"
       ]
     },
     "production": {
@@ -21,9 +23,7 @@
       "plugins": [
         "transform-react-constant-elements",
         "transform-react-inline-elements",
-        "transform-react-remove-prop-types",
-        "syntax-dynamic-import",
-        "react-loadable/babel"
+        "transform-react-remove-prop-types"
       ]
     }
   }

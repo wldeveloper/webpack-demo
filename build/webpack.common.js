@@ -23,6 +23,7 @@ module.exports = {
       vj: '@vj',
       classnames: 'classnames/bind',
       svg: 'react-svg-inline',
+      cps: path.resolve(__dirname, '../src/components'),
       actions$: path.resolve(__dirname, '../src/actions/index.jsx'),
     },
     extensions: ['.js', '.json', '.jsx'],

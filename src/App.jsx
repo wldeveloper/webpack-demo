@@ -1,21 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-
-import Loadable from './components/Loadable';
-import css from './test.scss';
+import Router from './views/Router';
 
 const App = () => (
-  <Router>
-    <div>
-      <Route exact path="/home" component={() => <div className={css.wrap}>helaaaaaaaad <Loadable /></div>} />
-      <Route exact path="/list" component={() => <div>aaa</div>} />
-      <Route exact path="/" component={() => <div>hello world</div>} />
-    </div>
-  </Router>
+  <Router />
 );
 
-const mapDispatchToProps = {};
 const mapStateToProps = () => ({});
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
