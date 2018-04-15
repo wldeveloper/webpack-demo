@@ -7,7 +7,7 @@ const clearConsole = require('react-dev-utils/clearConsole');
 const devConfig = require('./build/webpack.dev.js');
 const getProcessForPort = require('react-dev-utils/getProcessForPort'); // eslint-disable-line
 const { choosePort } = require('react-dev-utils/WebpackDevServerUtils');
-const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages'); // eslint-disable-line
 
 const compiler = webpack(devConfig);
 const {
@@ -21,30 +21,24 @@ const HOSTNAME = hostname; // 主机名
 let PORT = port; // 端口
 // 配置输出
 compiler.plugin('done', stats => {
-  const messages = formatWebpackMessages(stats.toJson({}, true));
-  const isSuccessful = !messages.errors.length && !messages.warnings.length;
-  // 成功
-  if (isSuccessful) {
-    clearConsole();
-    console.log(chalk.green(`编译成功，监听在${protocol}//${HOSTNAME}:${PORT}${basename}`));
-  }
+  const info = stats.toJson();
   // 错误异常
-  if (messages.errors.length) {
+  if (stats.hasErrors()) {
     clearConsole();
     console.log(chalk.red('编译失败'));
-    messages.errors.forEach(msg => {
-      console.log(msg);
-    });
+    console.error(info.errors);
     return;
   }
   // 警告异常
-  if (messages.warnings.length) {
+  if (stats.hasWarnings()) {
     clearConsole();
-    console.log(chalk.yellow(`警告！监听在${protocol}//${HOSTNAME}:${PORT}${basename}`));
-    messages.warnings.forEach(msg => {
-      console.log(msg);
-    });
+    console.log(chalk.yellow(`监听在${protocol}//${HOSTNAME}:${PORT}${basename}`));
+    console.warn(info.warnings);
+    return;
   }
+  // 成功
+  clearConsole();
+  console.log(chalk.green(`编译成功，监听在${protocol}//${HOSTNAME}:${PORT}${basename}`));
 });
 // 启动devServer
 const runDevServer = (host, port) => {

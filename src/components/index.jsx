@@ -1,9 +1,9 @@
 import Dashboard from './Dashboard';
-import LoadableWrapped from './LoadableWrapped';
 import Loading from './Loading';
+import Hello from './Hello';
 
 export {
   Dashboard,
-  LoadableWrapped,
   Loading,
+  Hello,
 };

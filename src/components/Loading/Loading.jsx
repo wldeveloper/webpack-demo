@@ -14,9 +14,13 @@ const Loading = props => {
 };
 
 Loading.propTypes = {
-  error: oneOfType([object, bool]).isRequired,
+  error: oneOfType([object, bool]),
   timedOut: bool.isRequired,
   pastDelay: bool.isRequired,
+};
+
+Loading.defaultProps = {
+  error: null,
 };
 
 export default Loading;
